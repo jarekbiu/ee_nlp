@@ -3,7 +3,7 @@ import re
 
 
 def load_rule():
-    with open('rule.txt', 'r', encoding="utf-8") as f:
+    with open('rule.txt', 'r') as f:
         tag_allow = {}
         for line in f.readlines():
             line = line.strip()
@@ -16,14 +16,14 @@ if __name__ == "__main__":
 
     tab = {}
     tags = set()
-    with open('test.txt', 'r', encoding="utf-8") as f:
+    with open('../policy_corpus/small_raw.txt', 'r') as f:
         for line in f.readlines():
             words = line.strip().split("$ipolicy$")
             if len(words) == 2:
                 tag = words[0]
                 tags.add(tag)
                 title = words[1]
-                index = title.rfind(u"部")
+                index = title.rfind("部")
                 if index >= 0:
                     st = title[0:index + 1]
                     deps = st.split("、")
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     print(tags)
     print(len(tags))
-    with open('rule.txt', 'w', encoding="utf-8") as f:
+    with open('rule.txt', 'w') as f:
         sort_res = sorted(tab.items(), key=lambda item: item[0])
 
         res_tab = {}

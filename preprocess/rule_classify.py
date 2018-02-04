@@ -10,7 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 
 def load_rule():
-    with open('rule.txt', 'r', encoding="utf-8") as f:
+    with open('rule.txt', 'r') as f:
         tag_allow = {}
         for line in f.readlines():
             line = line.strip()
@@ -120,7 +120,7 @@ def judgeTag(title, title_seg, model, tag_table, stopwords, keywords=[]):
 
 if __name__ == "__main__":
 
-    model = gensim.models.Word2Vec.load("../wiki.zh.text.model")
+    model = gensim.models.Word2Vec.load("../wiki.zh.text.vector")
 
     titles = []
     titles_seg = []
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     keys = []
     tags = set()
 
-    with open('title.seg', 'r', encoding="utf-8") as f:
+    with open('../policy_corpus/title.seg', 'r') as f:
         for line in f.readlines():
             words = line.strip().split(" ")
             if len(words) < 2:
@@ -179,13 +179,13 @@ if __name__ == "__main__":
         if cnt % 1000 == 0:
             print("acc:" + str(acc) + " cnt:" + str(cnt) + " %:" + str(acc * 1.0 / cnt))
 
-    with open('rule_result.txt', 'w', encoding="utf-8") as f:
+    with open('rule_result.txt', 'w') as f:
         f.write("titel\tactual\tmodel\tkeyword\n")
         # f.write("titel\tmodel\tactual\n")
         for i in range(len(dest)):
             # f.write("%s\t%s\t%s\n" % (titles[i], dest[i], results[i]))
             f.write("%s\t%s\t%s\t%s\n" % (titles[i], dest[i], results[i], keys[i]))
 
-    with open('rule_result_right.txt', 'w', encoding="utf-8") as f:
+    with open('rule_result_right.txt', 'w') as f:
         f.write("\n".join(right))
     print(acc * 1.0 / cnt)

@@ -1,6 +1,8 @@
 import jieba
 import os
 
+from sklearn.preprocessing import LabelEncoder
+
 
 def stopwordslist(filepath):
     stopwords = [line.strip() for line in open(filepath, 'r', encoding='utf-8').readlines()]
@@ -14,8 +16,8 @@ if __name__ == "__main__":
     jieba.load_userdict('../dict/dict.txt')
     stopwords = stopwordslist('stopwords.txt')
 
-    content = open("test.txt", "r", encoding="utf-8").read()
-    with open('test.txt', 'r', encoding="utf-8") as f:
+    # content = open("../policy_corpus/raw.txt", "r", encoding="utf-8").read()
+    with open('../policy_corpus/raw.txt', 'r', encoding="utf-8") as f:
         for line in f.readlines():
             words = line.strip().split("$ipolicy$")
             if len(words) == 2:
@@ -25,6 +27,15 @@ if __name__ == "__main__":
 
                 tags.append(words[0])
 
-    with open('title.seg', 'w', encoding="utf-8") as f:
-        for i in range(len(tags)):
-            f.write(titles[i] + " " + " ".join(titles_seg[i]) + " " + tags[i] + os.linesep)
+    le = LabelEncoder()
+    print(set(tags))
+    print(len(set(tags)))
+    tags = le.fit_transform(tags)
+
+    with open('../policy_corpus/big_data.txt', 'w', encoding="utf-8") as f:
+        lines = [' '.join(line) for line in titles_seg]
+        f.write('\n'.join(lines))
+
+    with open('../policy_corpus/big_label.txt', 'w', encoding="utf-8") as f:
+        lines = [str(line) for line in tags]
+        f.write('\n'.join(lines))
