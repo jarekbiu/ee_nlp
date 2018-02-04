@@ -17,7 +17,7 @@ if __name__ == "__main__":
     stopwords = stopwordslist('stopwords.txt')
 
     # content = open("../policy_corpus/raw.txt", "r", encoding="utf-8").read()
-    with open('../policy_corpus/raw.txt', 'r', encoding="utf-8") as f:
+    with open('../policy_corpus/small_raw.txt', 'r', encoding="utf-8") as f:
         for line in f.readlines():
             words = line.strip().split("$ipolicy$")
             if len(words) == 2:
@@ -32,10 +32,10 @@ if __name__ == "__main__":
     print(len(set(tags)))
     tags = le.fit_transform(tags)
 
-    with open('../policy_corpus/big_data.txt', 'w', encoding="utf-8") as f:
+    with open('../policy_corpus/small_data.txt', 'w', encoding="utf-8") as f:
         lines = [' '.join(line) for line in titles_seg]
         f.write('\n'.join(lines))
 
-    with open('../policy_corpus/big_label.txt', 'w', encoding="utf-8") as f:
+    with open('../policy_corpus/small_label.txt', 'w', encoding="utf-8") as f:
         lines = [str(line) for line in tags]
         f.write('\n'.join(lines))

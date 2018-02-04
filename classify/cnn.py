@@ -11,8 +11,8 @@ if __name__ == "__main__":
     TEST_SPLIT = 0.2
 
     print('(1) load texts...')
-    texts = open('../policy_corpus/data.txt', encoding="utf-8").read().split("\n")
-    labels = open('../policy_corpus/label.txt', encoding="utf-8").read().split("\n")
+    texts = open('../policy_corpus/small_data.txt', encoding="utf-8").read().split("\n")
+    labels = open('../policy_corpus/small_label.txt', encoding="utf-8").read().split("\n")
 
     train_texts, test_texts, train_labels, test_labels = train_test_split(
         texts, labels,
